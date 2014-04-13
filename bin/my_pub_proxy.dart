@@ -4,16 +4,19 @@ import 'dart:io';
 import 'unzipper.dart';
 void main() {
   initLog();
+  String reposDir="/Users/peter/dart/proxy";
+  String inputDir="/Users/peter/dart/proxy_tmp";
+  String finishDir='/Users/peter/dart/proxy_finish';
   PermissionStore store = new PermissionStore();
   store.addPermission(new UserPermission("me", "mypassword"));
  // store.addPermission(new UserPermission("me@gmail.com", "")); //necessary to publish
 
-  var repos = [new PubRepoImpl(new Store(new StoreSettings.fromDir("/Users/peter/dart/proxy","/Users/peter/dart/proxy_tmp")))
+  var repos = [new PubRepoImpl(new Store(new StoreSettings.fromDir(reposDir,inputDir)))
                  ,new DartLangRemoteRepo(new Store(new StoreSettings.fromRepoDirPrefix('cache')), new HttpClient())];
   PubFederatedRepo pubrepo = new PubFederatedRepo(repos);
   //start_pub_proxy_server(pubrepo, port:8042, permissionStore:store, isSecure:false);
   start_pub_proxy_server(pubrepo, port:8042, isSecure:false);
-  new PubLibExtractor();
+  new PubLibExtractor(reposDir:reposDir, inputDir:inputDir,finishDir:finishDir);
 //  InitializeSSL();
 //  start_pub_proxy_server(pubrepo, port:443, permissionStore:store, isSecure:true);
 }
