@@ -1,0 +1,7 @@
+name: unzipper
+description: A sample command-line application
+dependencies:
+  archive: any
+  logging: any
+  path: any
+  pub_proxy_server: any
